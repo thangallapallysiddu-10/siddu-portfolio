@@ -64,114 +64,54 @@ footer{background:#0a0a0a;text-align:center;padding:40px;font-size:.85rem;color:
   .hero{flex-direction:column;text-align:center}
   .photo{margin-right:0}
 }
-/* ===== MOBILE HERO FIX ===== */
-@media (max-width: 600px) {
+/* ===== MOBILE LAYOUT (SINGLE SOURCE OF TRUTH) ===== */
+@media (max-width: 768px) {
 
-  h1 {
-    font-size: 2.4rem;
+  section {
+    min-height: auto;
+    padding: 80px 20px;
   }
 
-  p {
-    max-width: 100%;
-    font-size: 1rem;
+  nav .nav-links {
+    display: none;
   }
 
   .hero {
-    justify-content: center;
-    gap: 30px;
-  }
-
-  .hero > div:first-child {
-    order: 2;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
   }
 
   .photo {
     order: 1;
     width: 220px;
     height: 220px;
-    margin: 0 auto 20px auto;
-  }
-
-  .cta {
-    margin-top: 20px;
-  }
-
-  nav .nav-links {
-    display: none;
-  }
-}
-/* ===== FINAL MOBILE FIX (ALIGNMENT & FLOW) ===== */
-@media (max-width: 600px) {
-
-  section {
-    padding: 90px 20px;
-  }
-
-  .hero {
-    flex-direction: column;
-    align-items: center;
-    text-align: left;
-    gap: 24px;
+    margin: 0 auto 16px auto;
   }
 
   .hero > div:first-child {
+    order: 2;
     width: 100%;
   }
 
   h1 {
-    font-size: 2.3rem;
+    font-size: 2.2rem;
     line-height: 1.2;
   }
 
   p {
-    max-width: 100%;
-    font-size: 1rem;
-  }
-
-  .cta {
-    display: inline-block;
-    margin: 20px 0 10px 0;
-  }
-
-  .photo {
-    order: -1;
-    width: 220px;
-    height: 220px;
-    margin: 0 auto 10px auto;
-  }
-
-  /* hide nav links on mobile */
-  .nav-links {
-    display: none;
-  }
-}
-/* ===== MOBILE FINAL POLISH ===== */
-@media (max-width: 600px) {
-
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .hero > div:first-child {
-    text-align: center;
-  }
-
-  .hero p {
-    max-width: 92%;
+    max-width: 90%;
     margin: 0 auto;
+    font-size: 1rem;
   }
 
   .cta {
     margin: 24px auto 0 auto;
-  }
-
-  nav strong {
-    font-size: 1rem;
-    font-weight: 600;
+    display: block;
   }
 }
+
 
 </style>
 </head>
@@ -340,6 +280,7 @@ footer{background:#0a0a0a;text-align:center;padding:40px;font-size:.85rem;color:
 
 </body>
 </html>
+
 
 
 
