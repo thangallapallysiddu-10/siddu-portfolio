@@ -3,285 +3,557 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Portfolio of Siddu Thangallapally - Computer Science student specializing in Cybersecurity and Full-Stack Development.">
 <title>Siddu | Portfolio</title>
+<link rel="preload" href="photo.jpeg" as="image">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;color:#eaeaea;background:#0a0a0a}
+/* CSS VARIABLES & RESET */
+:root {
+  --bg-dark: #0a0a0a;
+  --bg-ash: #141414;
+  --text-main: #eaeaea;
+  --text-muted: #b5b5b5;
+  --accent: #7cff00;
+  --card-bg: #1a1a1a;
+  --card-hover: rgba(124, 255, 0, 0.05);
+}
 
-/* NAV */
-nav{position:fixed;top:0;width:100%;background:rgba(10,10,10,.85);backdrop-filter:blur(10px);z-index:1000}
+*, *::before, *::after {
+  box-sizing:border-box;margin:0;padding:0
+}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text-main);background:var(--bg-dark);overflow-x:hidden}
+
+/* HEADER & NAV */
+header {
+  position:fixed;top:0;width:100%;background:rgba(10,10,10,.85);backdrop-filter:blur(10px);z-index:1000;border-bottom:1px solid rgba(255,255,255,0.05)
+}
 .nav-inner{max-width:1200px;margin:auto;padding:18px 40px;display:flex;justify-content:space-between;align-items:center}
-.nav-links a{margin-left:30px;font-size:.9rem;color:#bdbdbd;text-decoration:none}
-.nav-links a:hover{color:#fff}
+.nav-brand{font-weight:bold;color:var(--text-main);text-decoration:none;font-size:1.2rem}
+
+.nav-links{display:flex;align-items:center}
+.nav-links a{position:relative;margin-left:30px;font-size:.9rem;color:var(--text-muted);text-decoration:none;transition:color 0.3s ease;padding:5px 0}
+.nav-links a:hover, .nav-links a.active{color:#fff}
+.nav-links a::after{content:'';position:absolute;width:100%;transform:scaleX(0);height:2px;bottom:0;left:0;background-color:var(--accent);transform-origin:bottom right;transition:transform 0.3s ease-out;}
+.nav-links a:hover::after, .nav-links a.active::after{transform:scaleX(1);transform-origin:bottom left;}
+
+.hamburger{display:none;cursor:pointer;background:none;border:none;color:var(--text-main)}
+.hamburger svg{width:28px;height:28px;fill:currentColor}
 
 /* SECTIONS */
-section{min-height:100vh;padding:120px 80px;display:flex;align-items:center}
-.section-dark{background:#0a0a0a}
-.section-ash{background:#141414}
+section{padding:80px 40px;overflow:hidden;contain:content}
+#home{min-height:100vh;display:flex;align-items:center}
+.section-dark{background:var(--bg-dark)}
+.section-ash{background:var(--bg-ash)}
 .container{max-width:1200px;width:100%;margin:auto}
 
 /* TEXT */
-h1{font-size:3.6rem;margin-bottom:20px}
-h2{font-size:2.4rem;margin-bottom:30px}
-h3{margin-bottom:12px}
-p{color:#b5b5b5;max-width:750px;line-height:1.7;font-size:1.05rem}
+h1{font-size:clamp(2.5rem, 5vw + 1rem, 3.6rem);margin-bottom:20px;line-height:1.2;}
+h2{font-size:clamp(2rem, 4vw + 1rem, 2.4rem);margin-bottom:40px;}
+h3{margin-bottom:12px;font-size:clamp(1.1rem, 2vw + 0.5rem, 1.3rem);}
+p{color:var(--text-muted);max-width:750px;line-height:1.7;font-size:clamp(1rem, 1.5vw + 0.5rem, 1.05rem);}
+
+/* CANVAS */
+#hero-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.6;pointer-events:none}
 
 /* HERO */
-.hero{display:flex;align-items:center;justify-content:space-between;gap:60px}
-.photo{width:300px;height:300px;border-radius:50%;overflow:hidden;border:2px solid #1e1e1e;margin-right:-55px}
-.photo img{width:100%;height:100%;object-fit:cover}
-.cta{display:inline-block;margin-top:30px;padding:14px 28px;background:#7cff00;color:#000;border-radius:6px;font-weight:600;text-decoration:none}
+#home{position:relative}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:60px;position:relative;z-index:1}
+.hero-content{flex:1}
+.photo{width:clamp(220px, 25vw, 300px);height:clamp(220px, 25vw, 300px);border-radius:50%;overflow:hidden;border:2px solid #1e1e1e;flex-shrink:0;box-shadow: 0 0 30px rgba(124, 255, 0, 0.1)}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.cta{display:inline-block;margin-top:30px;padding:14px 28px;background:var(--accent);color:#000;border-radius:6px;font-weight:600;text-decoration:none;transition:transform 0.3s ease, box-shadow 0.3s ease}
+.cta:hover{transform:translateY(-3px);box-shadow: 0 10px 20px rgba(124, 255, 0, 0.3)}
 
 /* SKILLS */
-.skill-group{margin-bottom:40px}
-.skill-list{display:flex;flex-wrap:wrap;gap:14px}
-.skill-list span{background:#1c1c1c;padding:10px 16px;border-radius:8px;font-size:.95rem}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:30px;}
+.skill-group{background:var(--card-bg);padding:26px;border-radius:16px;border:1px solid rgba(255,255,255,0.05);transition:transform 0.3s ease, box-shadow 0.3s ease}
+.skill-group:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.skill-list{display:flex;flex-wrap:wrap;gap:10px}
+.skill-list span{background:#111;padding:8px 14px;border-radius:6px;font-size:.9rem;border:1px solid rgba(255,255,255,0.1);transition:border-color 0.3s, color 0.3s}
+.skill-group:hover .skill-list span:hover{border-color:var(--accent);color:var(--accent)}
 
-/* PROJECTS */
+/* PROJECTS & EXPERIENCE */
 .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px}
-.project{background:#1a1a1a;padding:28px;border-radius:16px}
-.project ul{margin-left:18px;color:#b5b5b5}
-.project li{margin-bottom:8px}
-.project a{margin-right:16px;color:#7cff00;text-decoration:none}
-.disabled{color:#555;pointer-events:none}
+.project{background:var(--card-bg);padding:30px;border-radius:16px;border:1px solid rgba(255,255,255,0.05);transition:transform 0.3s ease, box-shadow 0.3s ease;display:flex;flex-direction:column}
+.project:hover{transform:translateY(-8px);box-shadow:0 15px 30px rgba(0,0,0,0.6), 0 0 15px var(--card-hover)}
+.project h3{color:#fff;margin-bottom:8px}
+.project .tech-stack{color:var(--accent);font-size:0.85rem;margin-bottom:15px;font-weight:500}
+.project ul{margin-left:18px;color:var(--text-muted);margin-bottom:20px;flex-grow:1}
+.project li{margin-bottom:10px;font-size:0.95rem;line-height:1.6}
+.project-links{display:flex;gap:16px;margin-top:auto}
+.project-links a, .project-links span{color:var(--accent);text-decoration:none;font-weight:500;transition:opacity 0.2s}
+.project-links a:hover{opacity:0.8}
+.disabled{color:#555 !important;cursor:not-allowed;}
 
-/* CARDS */
+/* CARDS (Education & Certifications & Achievements) */
 .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px}
-.card{background:#1a1a1a;padding:26px;border-radius:16px}
+.card{background:var(--card-bg);padding:30px;border-radius:16px;border:1px solid rgba(255,255,255,0.05);transition:transform 0.3s ease, box-shadow 0.3s ease}
+.card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
 
 /* CONTACT */
 .contact{text-align:center}
-.contact a{display:inline-block;margin:12px 16px;color:#7cff00;text-decoration:none}
+.contact-links{display:flex;justify-content:center;flex-wrap:wrap;gap:20px;margin-top:20px}
+.contact a{display:inline-block;padding:12px 24px;background:var(--card-bg);color:var(--text-main);text-decoration:none;border-radius:30px;border:1px solid rgba(255,255,255,0.1);transition:transform 0.3s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease}
+.contact a:hover{background:var(--accent);color:#000;border-color:var(--accent);transform:translateY(-3px)}
 
 /* FOOTER */
-footer{background:#0a0a0a;text-align:center;padding:40px;font-size:.85rem;color:#666}
+footer{background:var(--bg-dark);text-align:center;padding:40px;font-size:.85rem;color:#666;border-top:1px solid rgba(255,255,255,0.05)}
+
+/* --- ANIMATIONS (0 LAG CSS-BASED) --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
+  will-change: opacity, transform;
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger for hero items */
+.hero-stagger {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s cubic-bezier(0.5, 0, 0, 1) forwards;
+  will-change: opacity, transform;
+}
+.hero-stagger:nth-child(1){animation-delay:0.1s}
+.hero-stagger:nth-child(2){animation-delay:0.25s}
+.hero-stagger:nth-child(3){animation-delay:0.4s}
+
+/* CSS-based Stagger for grids (No JS setTimeout lag) */
+.grid-stagger {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s cubic-bezier(0.5, 0, 0, 1), transform 0.6s cubic-bezier(0.5, 0, 0, 1);
+  will-change: opacity, transform;
+}
+.stagger-container.active .grid-stagger {
+  opacity: 1;
+  transform: translateY(0);
+}
+.stagger-container.active .grid-stagger:nth-child(1) { transition-delay: 0.1s; }
+.stagger-container.active .grid-stagger:nth-child(2) { transition-delay: 0.2s; }
+.stagger-container.active .grid-stagger:nth-child(3) { transition-delay: 0.3s; }
+.stagger-container.active .grid-stagger:nth-child(4) { transition-delay: 0.4s; }
+.stagger-container.active .grid-stagger:nth-child(5) { transition-delay: 0.5s; }
+.stagger-container.active .grid-stagger:nth-child(6) { transition-delay: 0.6s; }
+.stagger-container.active .grid-stagger:nth-child(7) { transition-delay: 0.7s; }
+.stagger-container.active .grid-stagger:nth-child(8) { transition-delay: 0.8s; }
+
+@keyframes fadeInUp{
+  to{opacity:1;transform:translateY(0)}
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal, .grid-stagger, .hero-stagger {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    will-change: auto;
+  }
+}
 
 /* MOBILE */
-@media(max-width:900px){
-  section{padding:100px 30px}
-  .hero{flex-direction:column;text-align:center}
-  .photo{margin-right:0}
-}
-/* ===== MOBILE LAYOUT (SINGLE SOURCE OF TRUTH) ===== */
 @media (max-width: 768px) {
-
-  section {
-    min-height: auto;
-    padding: 80px 20px;
+  .nav-inner{padding:15px 25px}
+  .hamburger{display:block}
+  
+  .nav-links{
+    position:fixed;top:65px;left:0;width:100%;background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);
+    flex-direction:column;padding:20px 0;gap:20px;
+    transform:translateY(-150%);transition:transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-bottom:1px solid rgba(255,255,255,0.1);z-index:999;
   }
+  
+  .nav-links.show{transform:translateY(0)}
+  .nav-links a{margin-left:0;font-size:1.1rem}
 
-  nav .nav-links {
-    display: none;
-  }
+  section {padding: 60px 20px;}
+  #home {padding-top: 100px;}
 
   .hero {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column-reverse;
     text-align: center;
-    gap: 24px;
+    gap: 30px;
   }
-
+  
   .photo {
-    order: 1;
-    width: 220px;
-    height: 220px;
-    margin: 0 auto 16px auto;
-  }
-
-  .hero > div:first-child {
-    order: 2;
-    width: 100%;
-  }
-
-  h1 {
-    font-size: 2.2rem;
-    line-height: 1.2;
-  }
-
-  p {
-    max-width: 90%;
     margin: 0 auto;
-    font-size: 1rem;
   }
 
   .cta {
     margin: 24px auto 0 auto;
-    display: block;
+  }
+
+  /* Adjust grid columns for very small screens */
+  .project-grid, .card-grid, .skills-grid {
+    grid-template-columns: 1fr;
   }
 }
-
-
 </style>
 </head>
 
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <strong>Siddu Thangallapally</strong>
-    <div class="nav-links">
-      <a href="#home">Home</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#education">Education</a>
-      <a href="#certifications">Certifications</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </div>
-</nav>
-
-<!-- HOME / ABOUT -->
-<section id="home" class="section-dark">
-  <div class="container hero">
-    <div>
-      <h1>Hi, I’m Siddu</h1>
-      <p>
-        I’m a Computer Science and Engineering student specializing in Cybersecurity, with a strong interest in building practical and reliable software systems. I focus on understanding how applications work end to end, from data flow to system behavior. Through hands-on projects in security, automation, and machine learning, I continuously improve my problem-solving skills and apply technology to real-world challenges.
-      </p>
-      <a class="cta" href="#projects">View my work</a>
-    </div>
-    <div class="photo">
-      <img src="photo.jpeg" alt="Siddu">
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills" class="section-ash">
-  <div class="container">
-    <h2>Skills</h2>
-
-    <div class="skill-group">
-      <h3>Programming Languages</h3>
-      <div class="skill-list"><span>Python</span><span>Java</span></div>
-    </div>
-
-    <div class="skill-group">
-      <h3>Web Technologies</h3>
-      <div class="skill-list"><span>HTML</span><span>CSS</span></div>
-    </div>
-
-    <div class="skill-group">
-      <h3>Databases & Tools</h3>
-      <div class="skill-list"><span>SQL</span><span>GitHub</span><span>VS Code</span></div>
-    </div>
-
-    <div class="skill-group">
-      <h3>Core Concepts</h3>
-      <div class="skill-list"><span>Data Structures</span><span>Networking</span><span>Application Logic</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects" class="section-dark">
-  <div class="container">
-    <h2>Projects</h2>
-
-    <div class="project-grid">
-
-      <div class="project">
-        <h3>Secure Storage System for Medical Image Data</h3>
-        <ul>
-          <li>Developed a secure Django-based backend for storing and managing medical X-ray images with strong focus on data privacy and integrity.</li>
-          <li>Implemented blockchain concepts by storing cryptographic image fingerprints to detect tampering and ensure immutability.</li>
-        </ul>
-        <a href="https://github.com/thangallapallysiddu-10/Secure-Storage-System-for-Medical-Image-Data" target="_blank">GitHub</a>
-        <a class="disabled">Live</a>
-      </div>
-
-      <div class="project">
-        <h3>CertifyMe — Digital Certificate Verification System</h3>
-        <ul>
-          <li>Implemented certificate validation using cryptographic hashing to ensure authenticity and detect tampering.</li>
-          <li>Built secure backend workflows for certificate generation, storage, and verification using Flask and SQLite.</li>
-        </ul>
-        <a href="https://github.com/thangallapallysiddu-10/CERTIFY-ME" target="_blank">GitHub</a>
-        <a class="disabled">Live</a>
-      </div>
-
-      <div class="project">
-        <h3>AI Job Bot (LinkedIn Automation System)</h3>
-        <ul>
-          <li>Built an automation bot to parse resumes, extract job details, and match LinkedIn job postings using Python, Regex, and PyPDF2.</li>
-          <li>Developed a secure Flask dashboard for authentication and monitoring bot activity, and automated navigation using Selenium.</li>
-        </ul>
-        <a class="disabled">GitHub</a>
-        <a class="disabled">Live</a>
-      </div>
-
-      <div class="project">
-        <h3>Enhancing Insider Threat Detection</h3>
-        <ul>
-          <li>Developed a machine-learning-based system to detect insider threats through behavioral analysis.</li>
-          <li>Improved detection accuracy by handling data imbalance and evaluating multiple ML models.</li>
-        </ul>
-        <a class="disabled">GitHub</a>
-        <a class="disabled">Live</a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- EDUCATION -->
-<section id="education" class="section-ash">
-  <div class="container">
-    <h2>Education</h2>
-
-    <div class="card-grid">
-      <div class="card">
-        <h3>B.Tech – Computer Science and Engineering (Cybersecurity)</h3>
-        <p>Indur Institute of Engineering and Technology, Telangana</p>
-        <p>2022 – 2026 | CGPA: 7.70 / 10</p>
-      </div>
-
-      <div class="card">
-        <h3>Intermediate Education</h3>
-        <p>SR Prime Junior College, Telangana</p>
-        <p>2020 – 2022 | CGPA: 7.8 / 10</p>
-      </div>
-
-      <div class="card">
-        <h3>Secondary School Education (Class X)</h3>
-        <p>Ravindra Bharathi School, Hyderabad</p>
-        <p>2019 – 2020 | CGPA: 9.8 / 10</p>
+<header>
+  <nav aria-label="Main Navigation">
+    <div class="nav-inner">
+      <a href="#home" class="nav-brand" aria-label="Home">Siddu Thangallapally</a>
+      <button class="hamburger" aria-expanded="false" aria-label="Toggle Navigation">
+        <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+      </button>
+      <div class="nav-links">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#education" class="nav-link">Education</a>
+        <a href="#certifications" class="nav-link">Certifications</a>
+        <a href="#achievements" class="nav-link">Achievements</a>
+        <a href="#contact" class="nav-link">Contact</a>
       </div>
     </div>
-  </div>
-</section>
+  </nav>
+</header>
 
-<!-- CERTIFICATIONS -->
-<section id="certifications" class="section-dark">
-  <div class="container">
-    <h2>Certifications</h2>
-
-    <div class="card-grid">
-      <div class="card"><h3>Web Development Fundamentals</h3><p>IBM SkillsBuild</p></div>
-      <div class="card"><h3>SQL (Basic)</h3><p>HackerRank</p></div>
-      <div class="card"><h3>Introduction to Python</h3><p>Wingspan Infosys</p></div>
+<main>
+  <!-- HOME / ABOUT -->
+  <section id="home" class="section-dark" aria-labelledby="home-heading">
+    <canvas id="hero-canvas"></canvas>
+    <div class="container hero" id="hero-container">
+      <div class="hero-content">
+        <h1 id="home-heading" class="hero-stagger">Hi, I’m Siddu</h1>
+        <p class="hero-stagger">
+          Computer Science and Engineering student with hands-on experience building web applications and software solutions using Python and Node.js. Passionate about writing clean, efficient code with a strong foundation in data structures, system design, and full-stack development.
+        </p>
+        <div class="hero-stagger">
+          <a class="cta" href="#experience">View my work</a>
+        </div>
+      </div>
+      <div class="photo hero-stagger" style="animation-delay: 0.1s">
+        <img src="photo.jpeg" alt="Portrait of Siddu Thangallapally" width="300" height="300" loading="eager">
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CONTACT -->
-<section id="contact" class="section-ash contact">
-  <div class="container">
-    <h2>Get in Touch</h2>
-    <a href="mailto:thangallapallysiddu10@gmail.com">Email</a>
-    <a href="https://github.com/thangallapallysiddu-10" target="_blank">GitHub</a>
-    <a href="https://www.linkedin.com/in/siddu-thangallapally-10s/" target="_blank">LinkedIn</a>
-  </div>
-</section>
+  <!-- SKILLS -->
+  <section id="skills" class="section-ash" aria-labelledby="skills-heading">
+    <div class="container">
+      <h2 id="skills-heading" class="reveal">Skills</h2>
+      <div class="skills-grid stagger-container">
+        <div class="skill-group grid-stagger">
+          <h3>Languages</h3>
+          <div class="skill-list">
+            <span>Python</span>
+          </div>
+        </div>
+        <div class="skill-group grid-stagger">
+          <h3>Databases</h3>
+          <div class="skill-list">
+            <span>SQL</span><span>MongoDB</span>
+          </div>
+        </div>
+        <div class="skill-group grid-stagger">
+          <h3>Web Technologies</h3>
+          <div class="skill-list">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Node.js</span>
+          </div>
+        </div>
+        <div class="skill-group grid-stagger">
+          <h3>Tools & Platforms</h3>
+          <div class="skill-list">
+            <span>Git</span><span>GitHub</span><span>VS Code</span><span>Postman</span>
+          </div>
+        </div>
+        <div class="skill-group grid-stagger" style="grid-column: 1 / -1">
+          <h3>Concepts</h3>
+          <div class="skill-list">
+            <span>Data Structures & Algorithms</span><span>System Design</span><span>DBMS</span><span>Networking</span><span>Operating Systems</span><span>Machine Learning</span>
+          </div>
+        </div>
+        <div class="skill-group grid-stagger" style="grid-column: 1 / -1">
+          <h3>Core Strengths</h3>
+          <div class="skill-list">
+            <span>Problem-Solving</span><span>Debugging</span><span>Adaptability</span><span>Team Collaboration</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<footer>© 2026 Siddu Thangallapally</footer>
+  <!-- EXPERIENCE -->
+  <section id="experience" class="section-dark" aria-labelledby="experience-heading">
+    <div class="container">
+      <h2 id="experience-heading" class="reveal">Experience</h2>
+      <div class="project-grid stagger-container">
+        <div class="project grid-stagger">
+          <h3>Kravix – Backend Developer Intern</h3>
+          <ul>
+            <li>Built and deployed RESTful APIs using Node.js, Express.js, and PostgreSQL, enabling core application features and streamlining business workflows.</li>
+            <li>Optimized SQL queries and backend processes, improving application response time, reliability, and overall user experience.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section-ash" aria-labelledby="projects-heading">
+    <div class="container">
+      <h2 id="projects-heading" class="reveal">Projects</h2>
+      <div class="project-grid stagger-container">
+
+        <div class="project grid-stagger">
+          <h3>CertifyMe – Secure Digital Certificate Management System</h3>
+          <p class="tech-stack">Python, Django, HTML, CSS, SQLite</p>
+          <ul>
+            <li>Streamlined certificate verification by 80% by automating QR code generation and securing 100% of digital records against tampering via SHA-256 hashing and HMAC signatures.</li>
+            <li>Implemented a login-free validation system utilizing QR-based shareable links to enable instant, secure certificate authentication for external users.</li>
+          </ul>
+          <div class="project-links">
+            <a href="https://github.com/thangallapallysiddu-10/CERTIFY-ME" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <span class="disabled">Live</span>
+          </div>
+        </div>
+
+        <div class="project grid-stagger">
+          <h3>Insider Threat Detection Using Machine Learning</h3>
+          <p class="tech-stack">Python, Scikit-learn, Pandas, Django, HTML, CSS, SQLite</p>
+          <ul>
+            <li>Engineered an ML-based threat detection pipeline on the CERT 5.2 dataset using Random Forest and SMOTE, achieving a 78.8% accuracy rate in classifying complex cyberattacks.</li>
+            <li>Designed an exploratory data analysis (EDA) module with 15+ interactive visualizations and statistical tests (Chi-Square, ANOVA) to map behavioral anomalies.</li>
+          </ul>
+          <div class="project-links">
+            <a href="https://github.com/thangallapallysiddu-10/insider-threat" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <span class="disabled">Live</span>
+          </div>
+        </div>
+
+        <div class="project grid-stagger">
+          <h3>Blockchain-Based Secure Storage System for Medical Image Data</h3>
+          <p class="tech-stack">Python, Django, HTML, CSS, SQLite</p>
+          <ul>
+            <li>Architected a custom Python-based distributed ledger network using SHA-256 cryptographic hashing, ensuring 100% medical record immutability and data integrity.</li>
+            <li>Engineered a role-based access control (RBAC) portal for admins, doctors, and patients, reducing unauthorized access vulnerabilities while boosting clinical data retrieval efficiency by 35%.</li>
+          </ul>
+          <div class="project-links">
+            <a href="https://github.com/thangallapallysiddu-10/Secure-Storage-System-for-Medical-Image-Data" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <span class="disabled">Live</span>
+          </div>
+        </div>
+
+        <div class="project grid-stagger">
+          <h3>AI Job Bot (LinkedIn Automation System)</h3>
+          <ul>
+            <li>Built an automation bot to parse resumes, extract job details, and match LinkedIn job postings using Python, Regex, and PyPDF2.</li>
+            <li>Developed a secure Flask dashboard for authentication and monitoring bot activity, and automated navigation using Selenium.</li>
+          </ul>
+          <div class="project-links">
+            <span class="disabled">GitHub</span>
+            <span class="disabled">Live</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education" class="section-dark" aria-labelledby="education-heading">
+    <div class="container">
+      <h2 id="education-heading" class="reveal">Education</h2>
+      <div class="card-grid stagger-container">
+        <div class="card grid-stagger">
+          <h3>B.Tech – Computer Science and Engineering (Cybersecurity)</h3>
+          <p>Indur Institute of Engineering and Technology</p>
+          <p>2022 – 2026 | CGPA: 7.92 / 10</p>
+        </div>
+        <div class="card grid-stagger">
+          <h3>Intermediate Education</h3>
+          <p>SR Prime Junior College, Karimnagar</p>
+          <p>2020 – 2022 | CGPA: 7.93 / 10</p>
+        </div>
+        <div class="card grid-stagger">
+          <h3>Secondary School Education (Class X)</h3>
+          <p>Ravindra Bharathi School, Hyderabad</p>
+          <p>2019 – 2020 | CGPA: 9.80 / 10</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications" class="section-ash" aria-labelledby="certifications-heading">
+    <div class="container">
+      <h2 id="certifications-heading" class="reveal">Certifications</h2>
+      <div class="card-grid stagger-container">
+        <div class="card grid-stagger"><h3>Web Development Fundamentals</h3><p>IBM SkillsBuild (2026)</p></div>
+        <div class="card grid-stagger"><h3>SQL (Basic)</h3><p>HackerRank (2026)</p></div>
+        <div class="card grid-stagger"><h3>Introduction to Python</h3><p>Infosys Wingspan (2025)</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements" class="section-dark" aria-labelledby="achievements-heading">
+    <div class="container">
+      <h2 id="achievements-heading" class="reveal">Achievements</h2>
+      <div class="card-grid stagger-container">
+        <div class="card grid-stagger">
+          <h3>Hackathon Volunteer and Mentor</h3>
+          <p>Assisted participants with technical problem-solving.</p>
+        </div>
+        <div class="card grid-stagger">
+          <h3>Blood Donation Drive Coordinator</h3>
+          <p>Organized campus drive with 100+ participants.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section-ash contact" aria-labelledby="contact-heading">
+    <div class="container">
+      <h2 id="contact-heading" class="reveal">Get in Touch</h2>
+      <div class="contact-links reveal">
+        <a href="tel:+917780762647" aria-label="Call me at 7780762647">7780762647</a>
+        <a href="mailto:thangallapallysiddu10@gmail.com" aria-label="Send an email">Email</a>
+        <a href="https://github.com/thangallapallysiddu-10" target="_blank" rel="noopener noreferrer" aria-label="Visit my GitHub">GitHub</a>
+        <a href="https://www.linkedin.com/in/siddu-thangallapally-10s/" target="_blank" rel="noopener noreferrer" aria-label="Visit my LinkedIn">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 Siddu Thangallapally</p>
+</footer>
+
+<script>
+  'use strict';
+
+  // 1. Mobile Navigation Toggle
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  const navItems = document.querySelectorAll('.nav-link');
+
+  hamburger.addEventListener('click', () => {
+    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', !isExpanded);
+    navLinks.classList.toggle('show');
+  });
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      hamburger.setAttribute('aria-expanded', 'false');
+      navLinks.classList.remove('show');
+    });
+  });
+
+  // 2. Intersection Observer for Scroll Animations (Zero-Lag)
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target); // Stop observing once revealed to save CPU
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal, .stagger-container').forEach(el => revealObserver.observe(el));
+
+  // 3. Scrollspy for Active Nav Link via Intersection Observer (Eliminates layout thrashing)
+  const navLi = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('section');
+  
+  const scrollspyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLi.forEach(a => {
+          a.classList.remove('active');
+          if (a.getAttribute('href').substring(1) === id) {
+            a.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -60% 0px' }); 
+  // Triggers precisely when a section is scrolling through the middle of the viewport
+
+  sections.forEach(section => scrollspyObserver.observe(section));
+
+  // 4. 3D Canvas Background (Starfield/Network)
+  const canvas = document.getElementById('hero-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let width, height, particles = [];
+
+    function initCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = document.getElementById('home').offsetHeight;
+      particles = [];
+      const numParticles = window.innerWidth < 768 ? 40 : 90;
+      for (let i = 0; i < numParticles; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: (Math.random() - 0.5) * 0.6,
+          radius: Math.random() * 1.5 + 0.5
+        });
+      }
+    }
+
+    function drawCanvas() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = 'rgba(124, 255, 0, 0.6)';
+      
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+        
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.strokeStyle = 'rgba(124, 255, 0, 0.15)';
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 130) {
+            ctx.beginPath();
+            ctx.lineWidth = 1 - dist / 130;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(drawCanvas);
+    }
+    
+    initCanvas();
+    drawCanvas();
+    window.addEventListener('resize', initCanvas);
+  }
+
+</script>
 
 </body>
 </html>
-
-
-
-
-
